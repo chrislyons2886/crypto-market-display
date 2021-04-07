@@ -1,14 +1,14 @@
 .sidebarPlaceholder{
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
     width: 18vw;
     float: left;
-    background-color: gray;
+    background-color: #E6E6E6;
     font-size: 30px;
     font-weight: 700;
     color: white;
+    padding-top: 2%;
 }
 
 .bottomPlaceholder{
@@ -47,12 +47,13 @@
 
 .boxLeft{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
     width: 100%;
     height: 100%;
     border: black solid 1px;
     background-color: white;
+    padding-top: 3%;
 }
 
 .boxRight{
@@ -61,7 +62,54 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    border: black solid 1px;
     margin-left: 5%;
+    border: black solid 1px;
     background-color: white;
+}
+
+.marketContent{
+    display: flex;
+    justify-content: start;
+    padding-left: 10%;
+    font-size: 20px;
+}
+
+.marketContentName{
+    height:70px; 
+    width: 100%;
+}
+
+.marketContentName h1{
+    display: flex; 
+    justify-content: center;
+}
+
+.percentChange{
+    display: flex; 
+    justify-content: center;
+    font-weight: 700;
+}
+
+.percentChangePos{
+    color: green;
+    font-weight: 700;
+}
+
+.percentChangeNeg{
+    color: red;
+    font-weight: 700;
+}
+
+.sidebarPlaceholder ul{
+    margin-left: 0;
+}
+
+.buttonStuff{
+    margin: 1% 35%;
+}
+
+.cardStyling{
+    margin-left: 3%;
+    margin-right: 3%;
+    height: 80%;
 }

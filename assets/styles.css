@@ -1,1 +1,60 @@
+.sidebarPlaceholder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 18vw;
+    float: left;
+    background-color: gray;
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+}
 
+.bottomPlaceholder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    background-color: black;
+    font-size: 50px;
+    font-weight: 700;
+    color: white;
+}
+
+.mainContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    background-color: #222222;
+}
+
+.twoBoxesContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    width: 90%;
+}
+
+.boxLeft{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: black solid 1px;
+    background-color: white;
+}
+
+.boxRight{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: black solid 1px;
+    margin-left: 5%;
+    background-color: white;
+}

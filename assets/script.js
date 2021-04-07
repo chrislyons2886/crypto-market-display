@@ -6,6 +6,9 @@ var cryptoTitle = document.getElementById('cryptoTitle')
 var currentPrice = document.getElementById('currentPrice')
 var percentChange = document.getElementById('percentChange')
 var searchTerm = localStorage.getItem('lastSearch')
+if(searchTerm == null){
+    searchTerm = 'bitcoin'
+}
 var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
 
 // current time function for graph display

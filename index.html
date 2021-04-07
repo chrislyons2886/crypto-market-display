@@ -13,15 +13,27 @@
 
 <body>
     <div class="sidebarPlaceholder" id="chrisContent">
-        <ul>
-            <li>Chris content goes here</li>
-            <button id=1search>Ethereum</button>
-            <button id=2search>Ravencoin</button>
-            <button id=3search>Beam</button>
-            <button id=4search>Litecoin</button>
-            <button id=5search>Dogecoin</button>
-            <button id=6search>Digitex</button>
-        </ul>
+        <!-- <div class="off-canvas position-left reveal-for-large  is-transition-push"> -->
+        <div class="cell auto">
+            <form id="searchForm">
+                <div class="grid-container">
+                    <div class="grid-x grid-padding-x">
+                        <div class="medium-12 cell">
+                            <label class="h5">Search for a Cryptocurrency
+                                <input type="text" id="searchBar" placeholder="Enter Currency Name">
+                            </label>
+                            <a class="button" id="searchButton">Click for Crypto Details</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div>
+                <ul id="searchHistory" style="display: flex; justify-content: center; flex-wrap: wrap;">
+    
+                </ul>
+            </div>
+        </div>
+        <!-- </div> -->
     </div>
     <div class="mainContent">
         <div class="twoBoxesContainer">
@@ -36,17 +48,52 @@
                     <p id="currentPrice" class="marketContent">Price</p>
                 </div>
             </div>
-            <div class="boxRight" id="rightBox">
-            </div>
+            <div class="boxRight" id="rightBox" >
+         </div>
         </div>
     </div>
-    <div class="bottomPlaceholder">Raquan Content goes here</div>
+    <div class="bottomPlaceholder">        
+        <div class="card cardStyling">
+        <div class="card-section">
+            <p>Day 1</p>
+        </div>
+        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+    </div>
+    <div class="card cardStyling">
+        <div class="card-section">
+            <p>Day 2</p>
+        </div>
+        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+    </div>
+    <div class="card cardStyling">
+        <div class="card-section">
+            <p>Day 3</p>
+        </div>
+        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+    </div>
+    <div class="card cardStyling">
+        <div class="card-section">
+            <p>Day 4</p>
+        </div>
+        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+    </div>
+    <div class="card cardStyling">
+        <div class="card-section">
+            <p>Day 5</p>
+        </div>
+        <!-- <img src="assets/img/generic/rectangle-1.jpg">    </div> -->
+</div>
+</div>
+</div></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
-    integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
+        integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"
+        integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="./assets/debounce.js"></script>
     <script src='./assets/script.js'> </script>
 
 </body>

@@ -1,17 +1,16 @@
-var amount = JSON.parse(localStorage.getItem('childrenNumber')) + 1
-var searchHistory = document.getElementById('chrisContent')
+var amount = JSON.parse(localStorage.getItem('buttonAmount')) + 1
+var searchHistory = document.getElementById('searchHistory')
+var searchButton = document.getElementById('searchButton')
+var searchBar = document.getElementById('searchBar')
 var cryptoTitle = document.getElementById('cryptoTitle')
 var currentPrice = document.getElementById('currentPrice')
 var percentChange = document.getElementById('percentChange')
-var searchTerm = 'bitcoin' //document.getElementById('searchBar')
+var searchTerm = localStorage.getItem('lastSearch')
 var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
 
+// current time function for graph display
 var currentTime = moment().format('YYYY-MM-DD')
 var currentTimeMinusTen = moment().subtract(10, 'days').format('YYYY-MM-DD')
-
-console.log(currentTime, currentTimeMinusTen)
-
-
 
 // get market info
 fetch(marketInfoUrl, {
@@ -21,8 +20,6 @@ fetch(marketInfoUrl, {
 })
 .then(response => response.json())
 .then(viewMarketData);
-
-
 
 // populate box with info
 function viewMarketData(data) {
@@ -81,25 +78,62 @@ function viewMarketData(data) {
             titleTextStyle: {fontSize: 30, bold: true},
             curveType: 'function',
             legend: { position: 'none' },
-            vAxis:  { format: 'currency' } 
+            vAxis:  { format: 'currency' },
+            width : '100%',
+            height : '100%'
           };
         
 
           var chart = new google.visualization.LineChart(document.getElementById('rightBox'));
         
           chart.draw(currentData, options);
+          
+          $(window).smartresize(function () {
+            chart.draw(currentData, options);
+            });
         }
     });
-    
+    // sets search to memory
+    localStorage.setItem('lastSearch', (data.data[objectId].name).toLowerCase())
 }
+
+// search button event listener
+searchButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    cryptocurrencyCurrency = searchBar.value
+    fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + cryptocurrencyCurrency, {
+        headers: {
+            'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
+        }
+    })
+        .then(response => response.json())
+        .then(viewMarketData)
+    createButton();
+    searchBar.value = ''
+});
+
+// form event listener
+document.addEventListener('submit', function (event) {
+    event.preventDefault();
+    cryptocurrencyCurrency = (searchBar.value).toLowerCase()
+    fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + cryptocurrencyCurrency, {
+        headers: {
+            'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
+        }
+    })
+        .then(response => response.json())
+        .then(viewMarketData)
+    createButton();
+    searchBar.value = ''
+});
 
 // populate search history
 for (var i = 1; i < amount; i++) {
     newButton = document.createElement('button')
-    newButton.classList.add('list-group-item')
+    newButton.classList.add('button')
+    newButton.classList.add('buttonStuff')
     childrenNumber = searchHistory.childElementCount + 1;
     newButton.id = ("search" + childrenNumber)
-    newButton.classList.add('searchHistoryButton')
     appendedItem = localStorage.getItem('search' + i)
     newButton.textContent = appendedItem
     searchHistory.appendChild(newButton)
@@ -108,20 +142,21 @@ for (var i = 1; i < amount; i++) {
 // adding buttons to search history
 function createButton() {
     newButton = document.createElement('button')
-    newButton.classList.add('list-group-item')
-    childrenNumber = searchHistory.childElementCount + 1;
-    newButton.id = ("search" + childrenNumber)
-    newButton.classList.add('searchHistoryButton')
+    newButton.classList.add('button')
+    newButton.classList.add('buttonStuff')
+    buttonAmount = searchHistory.childElementCount + 1;
+    newButton.id = ("search" + buttonAmount)
     initialButtonContent = searchBar.value
     buttonContent = initialButtonContent.charAt(0).toUpperCase() + initialButtonContent.slice(1)
     newButton.textContent = buttonContent
     localStorage.setItem(newButton.id, buttonContent)
-    localStorage.setItem('childrenNumber', childrenNumber)
+    localStorage.setItem('buttonAmount', buttonAmount)
     searchHistory.appendChild(newButton)
 }
 
 // made search history buttons clickable
 searchHistory.addEventListener('click', function (event) {
+    event.preventDefault()
     elementCheck = JSON.stringify(event.target.id)
     console.log(document.getElementById(event.target.id))
     cryptocurrencyCurrency = (document.getElementById(event.target.id).innerHTML).toLowerCase()

@@ -6,7 +6,12 @@ var cryptoTitle = document.getElementById('cryptoTitle')
 var currentPrice = document.getElementById('currentPrice')
 var percentChange = document.getElementById('percentChange')
 var searchTerm = localStorage.getItem('lastSearch')
-if(searchTerm == null){
+var footersTag = document.getElementById('footerTags')
+var count = 0
+var myLineChart
+
+$(document).foundation();
+if (searchTerm == null) {
     searchTerm = 'bitcoin'
 }
 var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
@@ -21,11 +26,12 @@ fetch(marketInfoUrl, {
         'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
     }
 })
-.then(response => response.json())
-.then(viewMarketData);
+    .then(response => response.json())
+    .then(viewMarketData);
 
 // populate box with info
 function viewMarketData(data) {
+    console.log(data)
     data
     objectId = JSON.parse(Object.keys(data.data))
     cryptoTitle.innerHTML = (data.data[objectId].name)
@@ -44,58 +50,76 @@ function viewMarketData(data) {
     } else {
         roundedPrice = data.data[objectId].quote.USD.price
     }
-
     currentPrice.innerHTML = ("Price: $" + roundedPrice)
     currentPrice.innerHTML += ("<br>Symbol: " + data.data[objectId].symbol)
     currentPrice.innerHTML += ("<br>Total Supply: " + data.data[objectId].total_supply)
+    var indexAmount = (data.data[objectId].tags).length
+    if(indexAmount > 5){
+        footersTag.innerHTML = ("Tags: ")
+        for (var i = 0; i < 5; i++){
+            footersTag.innerHTML += (data.data[objectId].tags[i])
+            if(i < 4){
+                footersTag.innerHTML += ', '
+            }
+        }
+    } else{
+        footersTag.innerHTML = ("Tags: ")
+        for (var i = 0; i < indexAmount; i++){
+            footersTag.innerHTML += (data.data[objectId].tags[i])
+            indexAmount -= 1
+            if(i < indexAmount){
+                footersTag.innerHTML += ', '
+            }
+        }
+    }
+
 
     // fetch 10 days for graph
     fetch('https://upenn-cors-anywhere.herokuapp.com/https://api.nomics.com/v1/currencies/sparkline?key=0ba82a9f9fa85bb428d7659d337cc3d6&ids=' + data.data[objectId].symbol + '&start=' + currentTimeMinusTen + 'T00%3A00%3A00Z&end=' + currentTime + 'T00%3A00%3A00Z')
-    .then(response => response.json())
-    .then(function produceArray(data){
-        console.log(data)
-        priceArray = data[0].prices
+        .then(response => response.json())
+        .then(function produceArray(data) {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            console.log(data)
+            priceArray = data[0].prices
+            const labels = [moment().subtract(10, 'days').format('M/DD'), moment().subtract(9, 'days').format('M/DD'), moment().subtract(8, 'days').format('M/DD'), moment().subtract(7, 'days').format('M/DD'), moment().subtract(6, 'days').format('M/DD'), moment().subtract(5, 'days').format('M/DD'), moment().subtract(4, 'days').format('M/DD'), moment().subtract(3, 'days').format('M/DD'), moment().subtract(2, 'days').format('M/DD'), moment().subtract(1, 'days').format('M/DD'), moment().format('M/DD')]
 
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-        
-        // google charts
-        function drawChart() {
-          var currentData = google.visualization.arrayToDataTable([
-            ['Day', 'Price'],
-            [moment().subtract(10, 'days').format('M/DD'),  JSON.parse(priceArray[0])],
-            [moment().subtract(9, 'days').format('M/DD'),  JSON.parse(priceArray[1])],
-            [moment().subtract(8, 'days').format('M/DD'),  JSON.parse(priceArray[2])],
-            [moment().subtract(7, 'days').format('M/DD'),  JSON.parse(priceArray[3])],
-            [moment().subtract(6, 'days').format('M/DD'),  JSON.parse(priceArray[4])],
-            [moment().subtract(5, 'days').format('M/DD'),  JSON.parse(priceArray[5])],
-            [moment().subtract(4, 'days').format('M/DD'),  JSON.parse(priceArray[6])],
-            [moment().subtract(3, 'days').format('M/DD'),  JSON.parse(priceArray[7])],
-            [moment().subtract(2, 'days').format('M/DD'),  JSON.parse(priceArray[8])],
-            [moment().subtract(1, 'days').format('M/DD'),  JSON.parse(priceArray[9])],
-            [moment().format('M/DD'),  JSON.parse(priceArray[10])]
-          ]);
-        
-          var options = {
-            title: cryptoTitle.innerHTML,
-            titleTextStyle: {fontSize: 30, bold: true},
-            curveType: 'function',
-            legend: { position: 'none' },
-            vAxis:  { format: 'currency' },
-            width : '100%',
-            height : '100%'
-          };
-        
+            var chartData = {
+                labels: labels,
+                datasets: [{
+                    label: 'Price',
+                    data: [
+                        JSON.parse(priceArray[0]),
+                        JSON.parse(priceArray[1]),
+                        JSON.parse(priceArray[2]),
+                        JSON.parse(priceArray[3]),
+                        JSON.parse(priceArray[4]),
+                        JSON.parse(priceArray[5]),
+                        JSON.parse(priceArray[6]),
+                        JSON.parse(priceArray[7]),
+                        JSON.parse(priceArray[8]),
+                        JSON.parse(priceArray[9]),
+                        JSON.parse(priceArray[10])],
+                    fill: true,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            };
 
-          var chart = new google.visualization.LineChart(document.getElementById('rightBox'));
-        
-          chart.draw(currentData, options);
-          
-          $(window).smartresize(function () {
-            chart.draw(currentData, options);
+            if (myLineChart) {
+                myLineChart.destroy()
+            }
+
+            window.myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
             });
-        }
-    });
+            ctx.canvas.parentNode.style.height = '100%';
+            ctx.canvas.parentNode.style.width = '100%';
+        });
     // sets search to memory
     localStorage.setItem('lastSearch', (data.data[objectId].name).toLowerCase())
 }
@@ -103,7 +127,7 @@ function viewMarketData(data) {
 // search button event listener
 searchButton.addEventListener('click', function (event) {
     event.preventDefault();
-    cryptocurrencyCurrency = searchBar.value
+    cryptocurrencyCurrency = (searchBar.value).toLowerCase()
     fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + cryptocurrencyCurrency, {
         headers: {
             'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
@@ -112,6 +136,9 @@ searchButton.addEventListener('click', function (event) {
         .then(response => response.json())
         .then(viewMarketData)
     createButton();
+    if (cryptocurrencyCurrency.length < 3) {
+        $('#exampleModal1').foundation('open')
+    }
     searchBar.value = ''
 });
 
@@ -127,12 +154,16 @@ document.addEventListener('submit', function (event) {
         .then(response => response.json())
         .then(viewMarketData)
     createButton();
+    if (cryptocurrencyCurrency.length < 3) {
+        $('#exampleModal1').foundation('open')
+    }
     searchBar.value = ''
 });
 
 // populate search history
 for (var i = 1; i < amount; i++) {
     newButton = document.createElement('button')
+    newButton.classList.add('hollow')
     newButton.classList.add('button')
     newButton.classList.add('buttonStuff')
     childrenNumber = searchHistory.childElementCount + 1;
@@ -145,6 +176,7 @@ for (var i = 1; i < amount; i++) {
 // adding buttons to search history
 function createButton() {
     newButton = document.createElement('button')
+    newButton.classList.add('hollow')
     newButton.classList.add('button')
     newButton.classList.add('buttonStuff')
     buttonAmount = searchHistory.childElementCount + 1;
@@ -160,6 +192,7 @@ function createButton() {
 // made search history buttons clickable
 searchHistory.addEventListener('click', function (event) {
     event.preventDefault()
+    console.log(event.target)
     elementCheck = JSON.stringify(event.target.id)
     console.log(document.getElementById(event.target.id))
     cryptocurrencyCurrency = (document.getElementById(event.target.id).innerHTML).toLowerCase()
@@ -173,3 +206,4 @@ searchHistory.addEventListener('click', function (event) {
             .then(viewMarketData)
     }
 })
+

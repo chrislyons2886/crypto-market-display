@@ -6,34 +6,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0">
     <title>Cryptocurrency Market Display</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
         integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/styles.css">
 </head>
 
 <body>
+    <div>
+        <div class="reveal" id="exampleModal1" data-reveal>
+            <h1>Awesome. I Have It.</h1>
+            <p class="lead">Your couch. It is mine.</p>
+            <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
     <div class="sidebarPlaceholder" id="chrisContent">
-        <!-- <div class="off-canvas position-left reveal-for-large  is-transition-push"> -->
         <div class="cell auto">
             <form id="searchForm">
                 <div class="grid-container">
                     <div class="grid-x grid-padding-x">
                         <div class="medium-12 cell">
-                            <label class="h5">Search for a Cryptocurrency
-                                <input type="text" id="searchBar" placeholder="Enter Currency Name">
+                            <h5 class="searchBarHeader">Search for a Cryptocurrency</h5>
+                            <label>
+                                <input type="text" id="searchBar" placeholder="Enter Currency Name"
+                                    style="width: 80%; display: inline;">
+                                <button class="button" id="searchButton" style="margin-top: 5%;"><i
+                                        class="fas fa-search"></i></button>
                             </label>
-                            <a class="button" id="searchButton">Click for Crypto Details</a>
                         </div>
                     </div>
                 </div>
             </form>
             <div>
                 <ul id="searchHistory" style="display: flex; justify-content: center; flex-wrap: wrap;">
-    
+
                 </ul>
             </div>
         </div>
-        <!-- </div> -->
     </div>
     <div class="mainContent">
         <div class="twoBoxesContainer">
@@ -44,48 +59,52 @@
                 <div class="marketContentName percentChange">
                     <h3 id='percentChange'></h3>
                 </div>
-                <div class="marketContentName">
+                <div class="marketContentName" style="height: 60%;">
                     <p id="currentPrice" class="marketContent"></p>
                 </div>
+                <footer class="tagsFooter"><small id="footerTags"></small></footer>
             </div>
-            <div class="boxRight" id="rightBox" >
-         </div>
+            <div class="boxRight" id="rightBox">
+                <div style="height: 100%; padding: 2%">
+                    <canvas id="myChart"> </canvas>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="bottomPlaceholder">        
+    <div class="bottomPlaceholder">
         <div class="card cardStyling">
-        <div class="card-section">
-            <p>Day 1</p>
+            <div class="card-section">
+                <p>Day 1</p>
+            </div>
+            <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
         </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+        <div class="card cardStyling">
+            <div class="card-section">
+                <p>Day 2</p>
+            </div>
+            <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+        </div>
+        <div class="card cardStyling">
+            <div class="card-section">
+                <p>Day 3</p>
+            </div>
+            <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+        </div>
+        <div class="card cardStyling">
+            <div class="card-section">
+                <p>Day 4</p>
+            </div>
+            <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
+        </div>
+        <div class="card cardStyling">
+            <div class="card-section">
+                <p>Day 5</p>
+            </div>
+            <!-- <img src="assets/img/generic/rectangle-1.jpg">    </div> -->
+        </div>
     </div>
-    <div class="card cardStyling">
-        <div class="card-section">
-            <p>Day 2</p>
-        </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
     </div>
-    <div class="card cardStyling">
-        <div class="card-section">
-            <p>Day 3</p>
-        </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
     </div>
-    <div class="card cardStyling">
-        <div class="card-section">
-            <p>Day 4</p>
-        </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
-    </div>
-    <div class="card cardStyling">
-        <div class="card-section">
-            <p>Day 5</p>
-        </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg">    </div> -->
-</div>
-</div>
-</div>
-</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
@@ -94,7 +113,7 @@
         integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="./assets/debounce.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src='./assets/script.js'> </script>
 
 </body>

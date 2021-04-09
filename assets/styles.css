@@ -59,7 +59,7 @@
 .boxRight{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-content: center;
     width: 100%;
     height: 100%;
     margin-left: 5%;
@@ -112,4 +112,17 @@
     margin-left: 3%;
     margin-right: 3%;
     height: 80%;
+}
+
+.searchBarHeader{
+    font-size: 30px;
+    font-weight: 700;
+    color: black;
+}
+
+.tagsFooter{
+    width:100%; 
+    display: flex; 
+    justify-content: center; 
+    align-content: flex-end;
 }

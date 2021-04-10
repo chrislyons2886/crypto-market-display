@@ -151,3 +151,11 @@
     justify-content: center; 
     align-content: flex-end;
 }
+
+*{
+    font-family: 'Merriweather', serif;
+}
+
+.marketHeader{
+    font-family: 'Merriweather', serif;
+}

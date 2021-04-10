@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 .sidebarPlaceholder{
     display: flex;
     justify-content: center;
@@ -22,27 +25,55 @@
     color: white;
 }
 
+.bottomPlaceholder1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    font-size: 50px;
+    font-weight: 700;
+}
+
 .cardStyling{
     margin-left: 3%;
     margin-right: 3%;
     height: 80%;
 }
 
+.cardStylingNew{
+    margin-left: 3%;
+    margin-right: 3%;
+    padding: 2% 0% 5% 3%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    height: 100%;
+    border: 1px black solid;
+}
 
 .mainContent{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 60vh;
+    width: 100%;
     background-color: #222222;
+}
+
+.mainContentNew{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    margin: 1% 0 2%;
 }
 
 .twoBoxesContainer{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80%;
-    width: 90%;
+    height: 100%;
+    width: 100%;
 }
 
 .boxLeft{
@@ -59,7 +90,7 @@
 .boxRight{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-content: center;
     width: 100%;
     height: 100%;
     margin-left: 5%;
@@ -105,11 +136,27 @@
 }
 
 .buttonStuff{
-    margin: 1% 35%;
+    margin: 1%;
 }
 
-.cardStyling{
-    margin-left: 3%;
-    margin-right: 3%;
-    height: 80%;
+.searchBarHeader{
+    font-size: 30px;
+    font-weight: 700;
+    color: black;
 }
+
+.tagsFooter{
+    width:100%; 
+    display: flex; 
+    justify-content: center; 
+    align-content: flex-end;
+}
+
+*{
+    font-family: 'Merriweather', serif;
+}
+
+.marketHeader{
+    font-family: 'Merriweather', serif;
+}
+

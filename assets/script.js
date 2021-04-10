@@ -163,11 +163,19 @@ function viewMarketData(data) {
     .then(response => response.json())
     .then(function fiveDayHistory(data) {
         console.log(data) 
-        day1Price.innerHTML = ('Price: ' + data[0].prices[1])
-        day2Price.innerHTML = ('Price: ' + data[0].prices[2])
-        day3Price.innerHTML = ('Price: ' + data[0].prices[3])
-        day4Price.innerHTML = ('Price: ' + data[0].prices[4])
-        day5Price.innerHTML = ('Price: ' + data[0].prices[5])
+    if (data[0].prices[0] > 10) {
+        day1Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString())
+        day2Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString())
+        day3Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString())
+        day4Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString())
+        day5Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString())
+    } else {
+        day1Price.innerHTML = ('Price: $' + data[0].prices[1])
+        day2Price.innerHTML = ('Price: $' + data[0].prices[2])
+        day3Price.innerHTML = ('Price: $' + data[0].prices[3])
+        day4Price.innerHTML = ('Price: $' + data[0].prices[4])
+        day5Price.innerHTML = ('Price: $' + data[0].prices[5])
+    }
 })
 }
 
@@ -182,7 +190,7 @@ searchButton.addEventListener('click', function (event) {
         }
     })
         .then(response => response.json())
-        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol()))
+        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
 }   else{
     searchBar.value = ''
    }
@@ -199,7 +207,7 @@ document.addEventListener('submit', function (event) {
         }
     })
         .then(response => response.json())
-        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol()))
+        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
     }  else{
         searchBar.value = ''
        }
@@ -244,17 +252,16 @@ function createButton() {
         newButton.classList.add('buttonStuff')
         buttonAmount = searchHistory.childElementCount + 1;
         newButton.id = ("search" + buttonAmount)
-        initialButtonContent = searchBar.value
-        buttonContent = initialButtonContent.charAt(0).toUpperCase() + initialButtonContent.slice(1)
-        newButton.textContent = buttonContent
-        localStorage.setItem(newButton.id, buttonContent)
         localStorage.setItem('buttonAmount', buttonAmount)
     }
     searchBar.value = ''
 }
 
-function addSymbol(){
+function addSymbol(data){
     if(makeButton){
+        buttonContent = data.data[objectId].name
+        newButton.textContent = buttonContent
+        localStorage.setItem(newButton.id, buttonContent)
         newButton.dataset.symbol = currentSymbol
         localStorage.setItem('symbol' + buttonAmount, currentSymbol)
         searchHistory.appendChild(newButton)
@@ -286,5 +293,5 @@ function symbolFailSearch() {
         }
     })
         .then(response => response.json())
-        .then(data => data.status.error_code !== 0 ? ($('#exampleModal1').foundation('open'), searchBar.value = '') : (createButton(), viewMarketData(data), addSymbol()))
+        .then(data => data.status.error_code !== 0 ? ($('#exampleModal1').foundation('open'), searchBar.value = '') : (createButton(), viewMarketData(data), addSymbol(data)))
 }

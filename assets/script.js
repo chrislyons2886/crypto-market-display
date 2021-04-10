@@ -19,6 +19,7 @@ var day3Price = document.getElementById('day3Price')
 var day4Price = document.getElementById('day4Price')
 var day5Price = document.getElementById('day5Price')
 
+
 $(document).foundation();
 if (searchTerm == null) {
     searchTerm = ('Bitcoin').toLowerCase()
@@ -287,6 +288,3 @@ function symbolFailSearch() {
         .then(response => response.json())
         .then(data => data.status.error_code !== 0 ? ($('#exampleModal1').foundation('open'), searchBar.value = '') : (createButton(), viewMarketData(data), addSymbol()))
 }
-
-
-

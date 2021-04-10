@@ -13,6 +13,11 @@ var isSymbol = true
 var makeButton = true
 var currentName
 var currentSymbol
+var day1Price = document.getElementById('day1Price')
+var day2Price = document.getElementById('day2Price')
+var day3Price = document.getElementById('day3Price')
+var day4Price = document.getElementById('day4Price')
+var day5Price = document.getElementById('day5Price')
 
 
 $(document).foundation();
@@ -25,6 +30,7 @@ var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-
 
 // current time function for graph display
 var currentTime = moment().format('YYYY-MM-DD')
+var currentTimeMinusFive = moment().subtract(5, 'days').format('YYYY-MM-DD')
 var currentTimeMinusTen = moment().subtract(10, 'days').format('YYYY-MM-DD')
 
 // get market info
@@ -153,6 +159,24 @@ function viewMarketData(data) {
         });
     // sets search to memory
     localStorage.setItem('lastSearch', (data.data[objectId].name).toLowerCase())
+    fetch('https://upenn-cors-anywhere.herokuapp.com/https://api.nomics.com/v1/currencies/sparkline?key=0ba82a9f9fa85bb428d7659d337cc3d6&ids=' + data.data[objectId].symbol + '&start=' + currentTimeMinusFive + 'T00%3A00%3A00Z&end=' + currentTime + 'T00%3A00%3A00Z')
+    .then(response => response.json())
+    .then(function fiveDayHistory(data) {
+        console.log(data) 
+    if (data[0].prices[0] > 10) {
+        day1Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString())
+        day2Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString())
+        day3Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString())
+        day4Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString())
+        day5Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString())
+    } else {
+        day1Price.innerHTML = ('Price: $' + data[0].prices[1])
+        day2Price.innerHTML = ('Price: $' + data[0].prices[2])
+        day3Price.innerHTML = ('Price: $' + data[0].prices[3])
+        day4Price.innerHTML = ('Price: $' + data[0].prices[4])
+        day5Price.innerHTML = ('Price: $' + data[0].prices[5])
+    }
+})
 }
 
 // search button event listener
@@ -166,7 +190,7 @@ searchButton.addEventListener('click', function (event) {
         }
     })
         .then(response => response.json())
-        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol()))
+        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
 }   else{
     searchBar.value = ''
    }
@@ -183,7 +207,7 @@ document.addEventListener('submit', function (event) {
         }
     })
         .then(response => response.json())
-        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol()))
+        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
     }  else{
         searchBar.value = ''
        }
@@ -228,17 +252,16 @@ function createButton() {
         newButton.classList.add('buttonStuff')
         buttonAmount = searchHistory.childElementCount + 1;
         newButton.id = ("search" + buttonAmount)
-        initialButtonContent = searchBar.value
-        buttonContent = initialButtonContent.charAt(0).toUpperCase() + initialButtonContent.slice(1)
-        newButton.textContent = buttonContent
-        localStorage.setItem(newButton.id, buttonContent)
         localStorage.setItem('buttonAmount', buttonAmount)
     }
     searchBar.value = ''
 }
 
-function addSymbol(){
+function addSymbol(data){
     if(makeButton){
+        buttonContent = data.data[objectId].name
+        newButton.textContent = buttonContent
+        localStorage.setItem(newButton.id, buttonContent)
         newButton.dataset.symbol = currentSymbol
         localStorage.setItem('symbol' + buttonAmount, currentSymbol)
         searchHistory.appendChild(newButton)
@@ -270,5 +293,5 @@ function symbolFailSearch() {
         }
     })
         .then(response => response.json())
-        .then(data => data.status.error_code !== 0 ? ($('#exampleModal1').foundation('open'), searchBar.value = '') : (createButton(), viewMarketData(data), addSymbol()))
+        .then(data => data.status.error_code !== 0 ? ($('#exampleModal1').foundation('open'), searchBar.value = '') : (createButton(), viewMarketData(data), addSymbol(data)))
 }

@@ -13,6 +13,11 @@ var isSymbol = true
 var makeButton = true
 var currentName
 var currentSymbol
+var day1Price = document.getElementById('day1Price')
+var day2Price = document.getElementById('day2Price')
+var day3Price = document.getElementById('day3Price')
+var day4Price = document.getElementById('day4Price')
+var day5Price = document.getElementById('day5Price')
 
 
 $(document).foundation();
@@ -25,6 +30,7 @@ var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-
 
 // current time function for graph display
 var currentTime = moment().format('YYYY-MM-DD')
+var currentTimeMinusFive = moment().subtract(5, 'days').format('YYYY-MM-DD')
 var currentTimeMinusTen = moment().subtract(10, 'days').format('YYYY-MM-DD')
 
 // get market info
@@ -153,6 +159,16 @@ function viewMarketData(data) {
         });
     // sets search to memory
     localStorage.setItem('lastSearch', (data.data[objectId].name).toLowerCase())
+    fetch('https://upenn-cors-anywhere.herokuapp.com/https://api.nomics.com/v1/currencies/sparkline?key=0ba82a9f9fa85bb428d7659d337cc3d6&ids=' + data.data[objectId].symbol + '&start=' + currentTimeMinusFive + 'T00%3A00%3A00Z&end=' + currentTime + 'T00%3A00%3A00Z')
+    .then(response => response.json())
+    .then(function fiveDayHistory(data) {
+        console.log(data) 
+        day1Price.innerHTML = ('Price: ' + data[0].prices[1])
+        day2Price.innerHTML = ('Price: ' + data[0].prices[2])
+        day3Price.innerHTML = ('Price: ' + data[0].prices[3])
+        day4Price.innerHTML = ('Price: ' + data[0].prices[4])
+        day5Price.innerHTML = ('Price: ' + data[0].prices[5])
+})
 }
 
 // search button event listener

@@ -69,6 +69,7 @@ function viewMarketData(data) {
     if (Math.sign(data.data[objectId].quote.USD.percent_change_24h) == 1) {
         percentChange.classList.add('percentChangePos')
         percentChange.classList.remove('percentChangeNeg')
+        percentChange.innerHTML = ('+' + data.data[objectId].quote.USD.percent_change_24h + '%')
     } else if (Math.sign(data.data[objectId].quote.USD.percent_change_24h) == -1) {
         percentChange.classList.add('percentChangeNeg')
         percentChange.classList.remove('percentChangePos')
@@ -81,7 +82,8 @@ function viewMarketData(data) {
     }
     currentPrice.innerHTML = ("Price: $" + roundedPrice)
     currentPrice.innerHTML += ("<br>Symbol: " + data.data[objectId].symbol)
-    currentPrice.innerHTML += ("<br>Total Supply: " + data.data[objectId].total_supply)
+    currentPrice.innerHTML += ("<br>Market Cap: " + (data.data[objectId].quote.USD.market_cap).toLocaleString())
+    currentPrice.innerHTML += ("<br>Total Supply: " + (data.data[objectId].total_supply).toLocaleString())
     var indexAmount = (data.data[objectId].tags).length
     if (indexAmount > 5) {
         footersTag.innerHTML = ("Tags: ")
@@ -190,7 +192,7 @@ document.addEventListener('submit', function (event) {
 // populate search history
 for (var i = 1; i < amount; i++) {
     newButton = document.createElement('button')
-    newButton.classList.add('hollow')
+    newButton.classList.add('list-group-item')
     newButton.classList.add('button')
     newButton.classList.add('buttonStuff')
     buttonSymbol = localStorage.getItem('symbol' + i)
@@ -221,7 +223,7 @@ function createButton() {
 
     if (makeButton) {
         newButton = document.createElement('button')
-        newButton.classList.add('hollow')
+        newButton.classList.add('list-group-item')
         newButton.classList.add('button')
         newButton.classList.add('buttonStuff')
         buttonAmount = searchHistory.childElementCount + 1;

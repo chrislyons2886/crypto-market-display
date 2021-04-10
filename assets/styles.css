@@ -22,27 +22,58 @@
     color: white;
 }
 
+.bottomPlaceholder1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    /* background-color: black; */
+    font-size: 50px;
+    font-weight: 700;
+    /* color: white; */
+}
+
 .cardStyling{
     margin-left: 3%;
     margin-right: 3%;
     height: 80%;
 }
 
+.cardStylingNew{
+    margin-left: 3%;
+    margin-right: 3%;
+    padding: 2% 0% 5% 3%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    height: 100%;
+    border: 1px black solid;
+}
 
 .mainContent{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 60vh;
+    width: 100%;
     background-color: #222222;
+}
+
+.mainContentNew{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    /* background-color: #222222; */
+    margin: 1% 0 2%;
 }
 
 .twoBoxesContainer{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80%;
-    width: 90%;
+    height: 100%;
+    width: 100%;
 }
 
 .boxLeft{
@@ -105,13 +136,7 @@
 }
 
 .buttonStuff{
-    margin: 1% 35%;
-}
-
-.cardStyling{
-    margin-left: 3%;
-    margin-right: 3%;
-    height: 80%;
+    margin: 1%;
 }
 
 .searchBarHeader{
@@ -126,3 +151,4 @@
     justify-content: center; 
     align-content: flex-end;
 }
+  

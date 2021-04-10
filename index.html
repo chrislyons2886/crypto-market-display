@@ -26,9 +26,9 @@
     </div>
   </div>
 
-  <div class="callout large primary" style="background-color: crimson; font-family: 'Merriweather', serif;">
+  <div class="callout large primary" style="background-color: crimson;">
     <div class="row column text-center">
-      <h1>Cryptocurrency Market Display</h1>
+      <h1 class="marketHeader">Cryptocurrency Market Display</h1>
       <div>
         <form id="searchForm">
           <label style="margin-top: 3%;">
@@ -41,7 +41,6 @@
   </div>
   </div>
 
-  <!-- We can now combine rows and columns when there's only one column in that row -->
   <div class="row medium-10 large-8 columns">
     <div>
       <ul id="searchHistory" style="display: flex; justify-content: center; flex-wrap: wrap;  ">
@@ -52,7 +51,7 @@
       <div class="twoBoxesContainer">
         <div class="boxLeft" id="leftBox">
           <div class="marketContentName">
-            <h1 id="cryptoTitle"></h1>
+            <h1 id="cryptoTitle" class="marketHeader"></h1>
           </div>
           <div class="marketContentName percentChange">
             <h3 id='percentChange'></h3>
@@ -69,13 +68,11 @@
         </div>
       </div>
     </div>
-    <!-- <div class="bottomPlaceholder1"> -->
     <div class="blog-post">
       <div class="card cardStylingNew">
         <div class="card-section">
           <p>Day 1</p>
         </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
       </div>
     </div>
     <div class="blog-post">
@@ -83,7 +80,6 @@
         <div class="card-section">
           <p>Day 2</p>
         </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
       </div>
     </div>
     <div class="blog-post">
@@ -91,7 +87,6 @@
         <div class="card-section">
           <p>Day 3</p>
         </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
       </div>
     </div>
     <div class="blog-post">
@@ -99,7 +94,6 @@
         <div class="card-section">
           <p>Day 4</p>
         </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg"> -->
       </div>
     </div>
     <div class="blog-post">
@@ -107,10 +101,8 @@
         <div class="card-section">
           <p>Day 5</p>
         </div>
-        <!-- <img src="assets/img/generic/rectangle-1.jpg">    </div> -->
       </div>
     </div>
-  </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>

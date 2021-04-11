@@ -39,8 +39,8 @@ fetch(marketInfoUrl, {
         'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
     }
 })
-.then(response => response.json())
-.then(data => data.status.error_code == 400 ? symbolFail() : viewMarketData(data))
+    .then(response => response.json())
+    .then(data => data.status.error_code == 400 ? symbolFail() : viewMarketData(data))
 
 // function that runs if symbol search doesnt work
 function symbolFail() {
@@ -160,40 +160,40 @@ function viewMarketData(data) {
     // sets search to memory
     localStorage.setItem('lastSearch', (data.data[objectId].name).toLowerCase())
     fetch('https://upenn-cors-anywhere.herokuapp.com/https://api.nomics.com/v1/currencies/sparkline?key=0ba82a9f9fa85bb428d7659d337cc3d6&ids=' + data.data[objectId].symbol + '&start=' + currentTimeMinusFive + 'T00%3A00%3A00Z&end=' + currentTime + 'T00%3A00%3A00Z')
-    .then(response => response.json())
-    .then(function fiveDayHistory(data) {
-        console.log(data) 
-    if (data[0].prices[0] > 10) {
-        day1Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString())
-        day2Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString())
-        day3Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString())
-        day4Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString())
-        day5Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString())
-    } else {
-        day1Price.innerHTML = ('Price: $' + data[0].prices[1])
-        day2Price.innerHTML = ('Price: $' + data[0].prices[2])
-        day3Price.innerHTML = ('Price: $' + data[0].prices[3])
-        day4Price.innerHTML = ('Price: $' + data[0].prices[4])
-        day5Price.innerHTML = ('Price: $' + data[0].prices[5])
-    }
-})
+        .then(response => response.json())
+        .then(function fiveDayHistory(data) {
+            console.log(data)
+            if (data[0].prices[0] > 10) {
+                day1Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString()))
+                day2Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString()))
+                day3Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString()))
+                day4Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString()))
+                day5Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString()))
+            } else {
+                day1Price.innerHTML = ('Price: $' + data[0].prices[1])
+                day2Price.innerHTML = ('Price: $' + data[0].prices[2])
+                day3Price.innerHTML = ('Price: $' + data[0].prices[3])
+                day4Price.innerHTML = ('Price: $' + data[0].prices[4])
+                day5Price.innerHTML = ('Price: $' + data[0].prices[5])
+            }
+        })
 }
 
 // search button event listener
 searchButton.addEventListener('click', function (event) {
     event.preventDefault();
     if ((searchBar.value).toLowerCase() !== currentSymbol.toLowerCase() && (searchBar.value).toLowerCase() !== currentName.toLowerCase()) {
-    cryptocurrencyCurrency = (searchBar.value).toLowerCase()
-    fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + cryptocurrencyCurrency, {
-        headers: {
-            'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
-        }
-    })
-        .then(response => response.json())
-        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
-}   else{
-    searchBar.value = ''
-   }
+        cryptocurrencyCurrency = (searchBar.value).toLowerCase()
+        fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + cryptocurrencyCurrency, {
+            headers: {
+                'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
+            }
+        })
+            .then(response => response.json())
+            .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
+    } else {
+        searchBar.value = ''
+    }
 });
 
 // form event listener
@@ -201,16 +201,16 @@ document.addEventListener('submit', function (event) {
     event.preventDefault();
     if ((searchBar.value).toLowerCase() !== currentSymbol.toLowerCase() && (searchBar.value).toLowerCase() !== currentName.toLowerCase()) {
         cryptocurrencyCurrency = (searchBar.value).toLowerCase()
-    fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + cryptocurrencyCurrency, {
-        headers: {
-            'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
-        }
-    })
-        .then(response => response.json())
-        .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
-    }  else{
+        fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + cryptocurrencyCurrency, {
+            headers: {
+                'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
+            }
+        })
+            .then(response => response.json())
+            .then(data => data.status.error_code == 400 ? symbolFailSearch() : (createButton(), viewMarketData(data), addSymbol(data)))
+    } else {
         searchBar.value = ''
-       }
+    }
 });
 
 // populate search history
@@ -230,8 +230,8 @@ for (var i = 1; i < amount; i++) {
 
 // adding buttons to search history
 function createButton() {
-    if((searchBar.value).toLowerCase() == currentSymbol.toLowerCase() || (searchBar.value).toLowerCase() == currentName){
-    makeButton = false
+    if ((searchBar.value).toLowerCase() == currentSymbol.toLowerCase() || (searchBar.value).toLowerCase() == currentName) {
+        makeButton = false
     } else {
         for (var i = 1; i < (searchHistory.childElementCount + 1); i++) {
             appendedItems = (document.getElementById('search' + i).innerHTML).toLowerCase()
@@ -239,7 +239,7 @@ function createButton() {
             if (appendedItems == (searchBar.value).toLowerCase() || (appendedItemsEl.dataset.symbol).toLowerCase() == (searchBar.value).toLowerCase()) {
                 makeButton = false
                 break
-            } else{
+            } else {
                 makeButton = true
             }
         }
@@ -257,8 +257,8 @@ function createButton() {
     searchBar.value = ''
 }
 
-function addSymbol(data){
-    if(makeButton){
+function addSymbol(data) {
+    if (makeButton) {
         buttonContent = data.data[objectId].name
         newButton.textContent = buttonContent
         localStorage.setItem(newButton.id, buttonContent)
@@ -273,7 +273,7 @@ searchHistory.addEventListener('click', function (event) {
     event.preventDefault()
     elementCheck = JSON.stringify(event.target.id)
     cryptocurrencyCurrency = (document.getElementById(event.target.id).innerHTML).toLowerCase()
-    if (elementCheck.includes('search') && (cryptocurrencyCurrency !== currentSymbol && cryptocurrencyCurrency !== currentName )) {
+    if (elementCheck.includes('search') && (cryptocurrencyCurrency !== currentSymbol && cryptocurrencyCurrency !== currentName)) {
         fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + cryptocurrencyCurrency, {
             headers: {
                 'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'

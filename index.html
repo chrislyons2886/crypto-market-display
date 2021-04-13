@@ -32,16 +32,17 @@
       <div>
         <form id="searchForm">
           <label style="margin-top: 3%;">
-            <input type="text" id="searchBar" placeholder="Enter Currency Name" style="width: 50%; display: inline;">
-            <button class="button" id="searchButton" style="margin-top: 1%;"><i class="fas fa-search"></i></button>
+            <input type="text" id="searchBar" class="searchBar" placeholder="Enter Currency Name">
+            <button class="button buttonPlacement" id="searchButton" style="margin-top: 1%; margin-right: 0;"><i
+                class="fas fa-search"></i></button>
+            <button class="button" id="compareButton" style="margin-top: 1%;">Compare</button>
           </label>
         </form>
       </div>
     </div>
   </div>
-  </div>
-  
-  <div class="row medium-10 large-8 columns">
+
+  <div class="row medium-10 large-8 columns" style="padding-bottom: 5%;">
     <div>
       <ul id="searchHistory" style="display: flex; justify-content: center; flex-wrap: wrap;  ">
 
@@ -54,7 +55,7 @@
             <h1 id="cryptoTitle" class="marketHeader"></h1>
           </div>
           <div class="marketContentName percentChange">
-            <h3 id='percentChange'></h3>
+            <h3 id='percentChange'></h3><small id="smallHTML"></small>
           </div>
           <div class="marketContentName" style="height: 60%;">
             <p id="currentPrice" class="marketContent"></p>
@@ -70,42 +71,43 @@
     </div>
     <div class="blog-post">
       <div class="card cardStylingNew">
-        <div class="card-section"> 
-                            <h1>Day 1</h1>
+        <div class="card-section">
+          <h1 id="day1">Day 1</h1>
           <p id="day1Price"></p>
-        <div class="card-section">
+          <div class="card-section">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="blog-post">
-      <div class="card cardStylingNew">
-        <div class="card-section">
-                    <h1>Day 2</h1>
-          <p id="day2Price"></p>
+      <div class="blog-post">
+        <div class="card cardStylingNew">
+          <div class="card-section">
+            <h1 id="day2">Day 2</h1>
+            <p id="day2Price"></p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="blog-post">
-      <div class="card cardStylingNew">
-        <div class="card-section">
-                    <h1>Day 3</h1>
-          <p id="day3Price"></p>
+      <div class="blog-post">
+        <div class="card cardStylingNew">
+          <div class="card-section">
+            <h1 id="day3">Day 3</h1>
+            <p id="day3Price"></p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="blog-post">
-      <div class="card cardStylingNew">
-        <div class="card-section">
-                    <h1>Day 4</h1>
-          <p id="day4Price"></p>
+      <div class="blog-post">
+        <div class="card cardStylingNew">
+          <div class="card-section">
+            <h1 id="day4">Day 4</h1>
+            <p id="day4Price"></p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="blog-post">
-      <div class="card cardStylingNew">
-        <div class="card-section">
-                    <h1>Day 5</h1>
-          <p id="day5Price"></p>
+      <div class="blog-post">
+        <div class="card cardStylingNew">
+          <div class="card-section">
+            <h1 id="day5">Day 5</h1>
+            <p id="day5Price"></p>
+          </div>
         </div>
       </div>
     </div>

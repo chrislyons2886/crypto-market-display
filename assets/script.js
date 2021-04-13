@@ -173,11 +173,11 @@ function viewMarketData(data) {
         .then(function fiveDayHistory(data) {
             console.log(data)
             if (data[0].prices[0] > 10) {
-                day1Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString())
-                day2Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString())
-                day3Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString())
-                day4Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString())
-                day5Price.innerHTML = ('Price: $' + (JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString())
+                day1Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString()))
+                day2Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString()))
+                day3Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString()))
+                day4Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString()))
+                day5Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString()))
             } else {
                 day1Price.innerHTML = ('Price: $' + data[0].prices[1])
                 day2Price.innerHTML = ('Price: $' + data[0].prices[2])

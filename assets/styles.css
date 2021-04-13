@@ -221,6 +221,7 @@
 }
 
 .graphHeader{
+    font-family: 'Merriweather', serif;
     width: 100%; 
     display: flex; 
     justify-content: center; 

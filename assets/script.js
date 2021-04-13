@@ -20,14 +20,13 @@ var day3Price = document.getElementById('day3Price')
 var day4Price = document.getElementById('day4Price')
 var day5Price = document.getElementById('day5Price')
 var smallHTML = document.getElementById('smallHTML')
-var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + searchTerm)
-var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
 var compareButton = document.getElementById('compareButton')
-
 // if there's no history of last search it'll default to bitcoin
 if (searchTerm == null) {
     searchTerm = ('Bitcoin').toLowerCase()
 }
+var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + searchTerm)
+var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
 
 // current time function for graph display
 var currentTime = moment().format('YYYY-MM-DD')

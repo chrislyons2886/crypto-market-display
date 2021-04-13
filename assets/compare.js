@@ -22,6 +22,8 @@ var current1Symbol
 var current2Symbol
 var smallHTML1 = document.getElementById('smallHTML1')
 var smallHTML2 = document.getElementById('smallHTML2')
+var graphHeader1 = document.getElementById('graphHeader1')
+var graphHeader2 = document.getElementById('graphHeader2')
 var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + searchTerm)
 var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
 var compareButton = document.getElementById('compareButton')
@@ -77,6 +79,7 @@ function viewMarketData1(data) {
     current1Price.innerHTML += ("<br>Market Cap: " + (data.data[objectId].quote.USD.market_cap).toLocaleString())
     current1Price.innerHTML += ("<br>Total Supply: " + (data.data[objectId].total_supply).toLocaleString())
     var indexAmount = (data.data[objectId].tags).length
+    graphHeader1.innerHTML = crypto1Title.innerHTML
     if (indexAmount > 5) {
         footers1Tag.innerHTML = ("Tags: ")
         for (var i = 0; i < 5; i++) {
@@ -140,7 +143,7 @@ function viewMarketData1(data) {
                     maintainAspectRatio: false
                 }
             });
-            ctx.canvas.parentNode.style.height = '100%';
+            ctx.canvas.parentNode.style.height = '90%';
             ctx.canvas.parentNode.style.width = '100%';
         });
 }
@@ -184,6 +187,7 @@ function viewMarketData2(data) {
     current2Price.innerHTML += ("<br>Market Cap: " + (data.data[objectId].quote.USD.market_cap).toLocaleString())
     current2Price.innerHTML += ("<br>Total Supply: " + (data.data[objectId].total_supply).toLocaleString())
     var indexAmount = (data.data[objectId].tags).length
+    graphHeader2.innerHTML = crypto2Title.innerHTML
     if (indexAmount > 5) {
         footers2Tag.innerHTML = ("Tags: ")
         for (var i = 0; i < 5; i++) {
@@ -247,7 +251,7 @@ function viewMarketData2(data) {
                     maintainAspectRatio: false
                 }
             });
-            ctx.canvas.parentNode.style.height = '100%';
+            ctx.canvas.parentNode.style.height = '90%';
             ctx.canvas.parentNode.style.width = '100%';
         });
 }

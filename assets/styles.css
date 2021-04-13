@@ -209,6 +209,24 @@
     background-color: white;
 }
 
+.boxRightCompare{
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    border: black solid 1px;
+    background-color: white;
+    margin-left: 5%;
+}
+
+.graphHeader{
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    margin-bottom: 0
+}
+
 @media only screen and (max-width: 600px) {
     .mainContentNew{
         height: auto;

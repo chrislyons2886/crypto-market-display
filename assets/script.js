@@ -1,3 +1,4 @@
+$(document).foundation();
 var amount = JSON.parse(localStorage.getItem('buttonAmount')) + 1
 var searchHistory = document.getElementById('searchHistory')
 var searchButton = document.getElementById('searchButton')
@@ -18,15 +19,15 @@ var day2Price = document.getElementById('day2Price')
 var day3Price = document.getElementById('day3Price')
 var day4Price = document.getElementById('day4Price')
 var day5Price = document.getElementById('day5Price')
+var smallHTML = document.getElementById('smallHTML')
+var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + searchTerm)
+var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
+var compareButton = document.getElementById('compareButton')
 
-
-$(document).foundation();
+// if there's no history of last search it'll default to bitcoin
 if (searchTerm == null) {
     searchTerm = ('Bitcoin').toLowerCase()
 }
-var marketInfoUrl = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + searchTerm)
-
-var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=" + searchTerm)
 
 // current time function for graph display
 var currentTime = moment().format('YYYY-MM-DD')
@@ -54,6 +55,12 @@ function symbolFail() {
         .then(data => data.status.error_code !== 0 ? $('#exampleModal1').foundation('open') : viewMarketData(data))
 }
 
+//current day
+for (var i = 1; i < 6; i++) {
+    currentDay = document.getElementById('day' + i)
+    currentDay.innerHTML = moment().subtract((6 - i), 'days').format('MMM Do ')
+}
+
 // populate box with info
 function viewMarketData(data) {
     console.log(data)
@@ -76,10 +83,12 @@ function viewMarketData(data) {
         percentChange.classList.add('percentChangePos')
         percentChange.classList.remove('percentChangeNeg')
         percentChange.innerHTML = ('+' + data.data[objectId].quote.USD.percent_change_24h + '%')
+        smallHTML.innerHTML = ('24hr')
     } else if (Math.sign(data.data[objectId].quote.USD.percent_change_24h) == -1) {
         percentChange.classList.add('percentChangeNeg')
         percentChange.classList.remove('percentChangePos')
     }
+    smallHTML.innerHTML = ('24hr')
     // rounds to nearest hundredth if above 10 dollars
     if (data.data[objectId].quote.USD.price > 10) {
         roundedPrice = JSON.parse(data.data[objectId].quote.USD.price.toFixed(2)).toLocaleString()
@@ -257,6 +266,7 @@ function createButton() {
     searchBar.value = ''
 }
 
+// sets button text to current search
 function addSymbol(data) {
     if (makeButton) {
         buttonContent = data.data[objectId].name
@@ -295,3 +305,12 @@ function symbolFailSearch() {
         .then(response => response.json())
         .then(data => data.status.error_code !== 0 ? ($('#exampleModal1').foundation('open'), searchBar.value = '') : (createButton(), viewMarketData(data), addSymbol(data)))
 }
+
+compareButton.addEventListener('click', function () {
+    if (searchBar.value == null || searchBar.value < 2) {
+        localStorage.setItem('compare1', cryptoTitle.innerHTML)
+    } else {
+        localStorage.setItem('compare1', searchBar.value)
+    }
+    location.replace("compare.html");
+})

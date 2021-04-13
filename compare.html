@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Cryptocurrency Compare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <link rel="stylesheet" href="./assets/styles.css">
+</head>
+
+<body>
+
+    <div>
+        <div class="reveal" id="exampleModal1" data-reveal>
+            <h1>Invalid Search!</h1>
+            <p class="lead">Please try again.</p>
+            <p>Enter a valid crypto name.</p>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="callout large primary" style="background-color: #00007C;">
+        <div class="row column text-center">
+            <h1 class="marketHeader" style="color: white">Cryptocurrency Compare</h1>
+            <div>
+                <form id="searchForm">
+                    <label style="margin-top: 3%;">
+                        <div class='searchBarDiv'>
+                            <input type="text" id="crypto1" class="searchBarInputs" placeholder="Enter Currency 1">
+                            <input type="text" id="crypto2" class="searchBarInputs" placeholder="Enter Currency 2">
+                        </div>
+                        <br>
+                        <button class="button alert" id="compareButton" style="margin-top: 1%;">Compare</button>
+                        <button class="button alert" id="returnButton" style="margin-top: 1%;">Return</button>
+                    </label>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row medium-10 large-8 columns" style="padding-bottom: 5%;">
+        <div>
+            <ul id="searchHistory" style="display: flex; justify-content: center; flex-wrap: wrap;  ">
+
+            </ul>
+        </div>
+        <div class="mainContentNew">
+            <div class="twoBoxesContainer">
+                <div class="compare1" id="leftBox">
+                    <div class="marketContentName">
+                        <h1 id="crypto1Title" class="marketHeader"></h1>
+                    </div>
+                    <div class="marketContentName percentChange">
+                        <h3 id='percent1Change'></h3><small id="small1HTML"></small>
+                    </div>
+                    <div class="marketContentName" style="height: 60%;">
+                        <p id="current1Price" class="marketContent"></p>
+                    </div>
+                    <footer class="tagsFooter"><small id="footer1Tags"></small></footer>
+                </div>
+                <div class="compare2" id="rightBox">
+                    <div class="marketContentName">
+                        <h1 id="crypto2Title" class="marketHeader"></h1>
+                    </div>
+                    <div class="marketContentName percentChange">
+                        <h3 id='percent2Change'></h3><small id="small2HTML"></small>
+                    </div>
+                    <div class="marketContentName" style="height: 60%;">
+                        <p id="current2Price" class="marketContent"></p>
+                    </div>
+                    <footer class="tagsFooter"><small id="footer2Tags"></small></footer>
+                </div>
+            </div>
+        </div>
+        <div class="mainContentNew">
+            <div class="twoBoxesContainer">
+                <div class="boxLeftCompare" id="leftBox">
+                    <div style="height: 100%; padding: 2%">
+                        <canvas id="compare1"> </canvas>
+                    </div>
+                </div>
+                <div class="boxRight" id="rightBox">
+                    <div style="height: 100%; padding: 2%">
+                        <canvas id="compare2"> </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
+        integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"
+        integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ=="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src='./assets/compare.js'> </script>
+</body>
+
+</html>

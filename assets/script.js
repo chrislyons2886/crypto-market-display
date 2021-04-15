@@ -21,6 +21,7 @@ var day4Price = document.getElementById('day4Price')
 var day5Price = document.getElementById('day5Price')
 var smallHTML = document.getElementById('smallHTML')
 var compareButton = document.getElementById('compareButton')
+var currentTrending = document.getElementById('currentTrending')
 // if there's no history of last search it'll default to bitcoin
 if (searchTerm == null) {
     searchTerm = ('Bitcoin').toLowerCase()
@@ -32,6 +33,17 @@ var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-
 var currentTime = moment().format('YYYY-MM-DD')
 var currentTimeMinusFive = moment().subtract(5, 'days').format('YYYY-MM-DD')
 var currentTimeMinusTen = moment().subtract(10, 'days').format('YYYY-MM-DD')
+
+// fetch trending
+fetch('https://api.coingecko.com/api/v3/search/trending')
+    .then(response => response.json())
+    .then(function (data) {
+        console.log('Coin Gecko ')
+        console.log(data)
+        for (var i = 0; i < data.coins.length; i++) {
+            currentTrending.innerHTML += ' <button id="' + data.coins[i].item.symbol + '">' + data.coins[i].item.name + '</button>,'
+        }
+    })
 
 // get market info
 fetch(marketInfoUrl, {
@@ -62,6 +74,7 @@ for (var i = 1; i < 6; i++) {
 
 // populate box with info
 function viewMarketData(data) {
+    console.log('Coin Market Cap')
     console.log(data)
     data
     if (!window.isSmybol) {
@@ -122,69 +135,69 @@ function viewMarketData(data) {
     // fetch 10 days for graph
     fetch('https://upenn-cors-anywhere.herokuapp.com/https://api.nomics.com/v1/currencies/sparkline?key=0ba82a9f9fa85bb428d7659d337cc3d6&ids=' + data.data[objectId].symbol + '&start=' + currentTimeMinusTen + 'T00%3A00%3A00Z&end=' + currentTime + 'T00%3A00%3A00Z')
         .then(response => response.json())
-        .then(function produceArray(data) {
-            var ctx = document.getElementById('myChart').getContext('2d');
-            console.log(data)
-            priceArray = data[0].prices
-            const labels = [moment().subtract(10, 'days').format('M/DD'), moment().subtract(9, 'days').format('M/DD'), moment().subtract(8, 'days').format('M/DD'), moment().subtract(7, 'days').format('M/DD'), moment().subtract(6, 'days').format('M/DD'), moment().subtract(5, 'days').format('M/DD'), moment().subtract(4, 'days').format('M/DD'), moment().subtract(3, 'days').format('M/DD'), moment().subtract(2, 'days').format('M/DD'), moment().subtract(1, 'days').format('M/DD'), moment().format('M/DD')]
-
-            var chartData = {
-                labels: labels,
-                datasets: [{
-                    label: 'Price',
-                    data: [
-                        JSON.parse(priceArray[0]),
-                        JSON.parse(priceArray[1]),
-                        JSON.parse(priceArray[2]),
-                        JSON.parse(priceArray[3]),
-                        JSON.parse(priceArray[4]),
-                        JSON.parse(priceArray[5]),
-                        JSON.parse(priceArray[6]),
-                        JSON.parse(priceArray[7]),
-                        JSON.parse(priceArray[8]),
-                        JSON.parse(priceArray[9]),
-                        JSON.parse(priceArray[10])],
-                    fill: true,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }]
-            };
-
-            if (myLineChart) {
-                myLineChart.destroy()
-            }
-
-            window.myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: chartData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-            ctx.canvas.parentNode.style.height = '100%';
-            ctx.canvas.parentNode.style.width = '100%';
-        });
+        .then(produceArray);
     // sets search to memory
     localStorage.setItem('lastSearch', (data.data[objectId].name).toLowerCase())
-    fetch('https://upenn-cors-anywhere.herokuapp.com/https://api.nomics.com/v1/currencies/sparkline?key=0ba82a9f9fa85bb428d7659d337cc3d6&ids=' + data.data[objectId].symbol + '&start=' + currentTimeMinusFive + 'T00%3A00%3A00Z&end=' + currentTime + 'T00%3A00%3A00Z')
-        .then(response => response.json())
-        .then(function fiveDayHistory(data) {
-            console.log(data)
-            if (data[0].prices[0] > 10) {
-                day1Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString()))
-                day2Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString()))
-                day3Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString()))
-                day4Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString()))
-                day5Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString()))
-            } else {
-                day1Price.innerHTML = ('Price: $' + data[0].prices[1])
-                day2Price.innerHTML = ('Price: $' + data[0].prices[2])
-                day3Price.innerHTML = ('Price: $' + data[0].prices[3])
-                day4Price.innerHTML = ('Price: $' + data[0].prices[4])
-                day5Price.innerHTML = ('Price: $' + data[0].prices[5])
-            }
-        })
+}
+
+// creates graph
+function produceArray(data) {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    console.log('Nomics')
+    console.log(data)
+    priceArray = data[0].prices
+    const labels = [moment().subtract(10, 'days').format('M/DD'), moment().subtract(9, 'days').format('M/DD'), moment().subtract(8, 'days').format('M/DD'), moment().subtract(7, 'days').format('M/DD'), moment().subtract(6, 'days').format('M/DD'), moment().subtract(5, 'days').format('M/DD'), moment().subtract(4, 'days').format('M/DD'), moment().subtract(3, 'days').format('M/DD'), moment().subtract(2, 'days').format('M/DD'), moment().subtract(1, 'days').format('M/DD'), moment().format('M/DD')]
+
+    var chartData = {
+        labels: labels,
+        datasets: [{
+            label: 'Price',
+            data: [
+                JSON.parse(priceArray[0]),
+                JSON.parse(priceArray[1]),
+                JSON.parse(priceArray[2]),
+                JSON.parse(priceArray[3]),
+                JSON.parse(priceArray[4]),
+                JSON.parse(priceArray[5]),
+                JSON.parse(priceArray[6]),
+                JSON.parse(priceArray[7]),
+                JSON.parse(priceArray[8]),
+                JSON.parse(priceArray[9]),
+                JSON.parse(priceArray[10])],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    };
+
+    if (myLineChart) {
+        myLineChart.destroy()
+    }
+
+    window.myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+    ctx.canvas.parentNode.style.height = '100%';
+    ctx.canvas.parentNode.style.width = '100%';
+    // five day history
+    if (data[0].prices[0] > 10) {
+        day1Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString()))
+        day2Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString()))
+        day3Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString()))
+        day4Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString()))
+        day5Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString()))
+    } else {
+        day1Price.innerHTML = ('Price: $' + data[0].prices[1])
+        day2Price.innerHTML = ('Price: $' + data[0].prices[2])
+        day3Price.innerHTML = ('Price: $' + data[0].prices[3])
+        day4Price.innerHTML = ('Price: $' + data[0].prices[4])
+        day5Price.innerHTML = ('Price: $' + data[0].prices[5])
+    }
 }
 
 // search button event listener
@@ -312,4 +325,17 @@ compareButton.addEventListener('click', function () {
         localStorage.setItem('compare1', searchBar.value)
     }
     location.replace("compare.html");
+})
+
+
+
+currentTrending.addEventListener('click', function (event) {
+    if ((event.target.id).toLowerCase() !== currentSymbol.toLowerCase()) {
+    fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + event.target.id, {
+        headers: {
+            'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
+        }
+    })
+        .then(response => response.json())
+        .then(data => data.status.error_code == 400 ? symbolFailTrending() : (viewMarketData(data)))}
 })

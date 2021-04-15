@@ -14,11 +14,6 @@ var isSymbol = true
 var makeButton = true
 var currentName
 var currentSymbol
-var day1Price = document.getElementById('day1Price')
-var day2Price = document.getElementById('day2Price')
-var day3Price = document.getElementById('day3Price')
-var day4Price = document.getElementById('day4Price')
-var day5Price = document.getElementById('day5Price')
 var smallHTML = document.getElementById('smallHTML')
 var compareButton = document.getElementById('compareButton')
 var currentTrending = document.getElementById('currentTrending')
@@ -31,7 +26,6 @@ var marketInfoUrlSlug = ("https://upenn-cors-anywhere.herokuapp.com/https://pro-
 
 // current time function for graph display
 var currentTime = moment().format('YYYY-MM-DD')
-var currentTimeMinusFive = moment().subtract(5, 'days').format('YYYY-MM-DD')
 var currentTimeMinusTen = moment().subtract(10, 'days').format('YYYY-MM-DD')
 
 // fetch trending
@@ -43,7 +37,7 @@ fetch('https://api.coingecko.com/api/v3/search/trending')
         for (var i = 0; i < data.coins.length; i++) {
             currentTrending.innerHTML += ' <button id="' + data.coins[i].item.symbol + '">' + data.coins[i].item.name + '</button>,'
         }
-    })
+})
 
 // get market info
 fetch(marketInfoUrl, {
@@ -138,6 +132,23 @@ function viewMarketData(data) {
         .then(produceArray);
     // sets search to memory
     localStorage.setItem('lastSearch', (data.data[objectId].name).toLowerCase())
+    for (var i = 1; i < 6; i++) {
+        currentDay = moment().subtract(6 - i, 'days').format('DD-MM-YYYY')
+        const currentElement = document.getElementById('day' + i + 'Price')
+        fetch('https://upenn-cors-anywhere.herokuapp.com/https://api.coingecko.com/api/v3/coins/' + data.data[objectId].slug + '/history?date=' + currentDay)
+            .then(response => response.json())
+            .then(function (data) {
+                // five day history
+                if (data.market_data.current_price.usd > 10) {
+                    currentElement.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data.market_data.current_price.usd).toFixed(2)).toLocaleString()))
+                } else {
+                    currentElement.innerHTML = ('Price: $' + data.market_data.current_price.usd)
+                }
+
+                currentElement.innerHTML += ('<br> Market Cap: ' + data.market_data.market_cap.usd)
+                currentElement.innerHTML += ('<br> Total Volume: ' + data.market_data.total_volume.usd)
+            });
+    }
 }
 
 // creates graph
@@ -184,20 +195,6 @@ function produceArray(data) {
     });
     ctx.canvas.parentNode.style.height = '100%';
     ctx.canvas.parentNode.style.width = '100%';
-    // five day history
-    if (data[0].prices[0] > 10) {
-        day1Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[1]).toFixed(2)).toLocaleString()))
-        day2Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[2]).toFixed(2)).toLocaleString()))
-        day3Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[3]).toFixed(2)).toLocaleString()))
-        day4Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[4]).toFixed(2)).toLocaleString()))
-        day5Price.innerHTML = ('Price: $' + (parseFloat(JSON.parse(data[0].prices[5]).toFixed(2)).toLocaleString()))
-    } else {
-        day1Price.innerHTML = ('Price: $' + data[0].prices[1])
-        day2Price.innerHTML = ('Price: $' + data[0].prices[2])
-        day3Price.innerHTML = ('Price: $' + data[0].prices[3])
-        day4Price.innerHTML = ('Price: $' + data[0].prices[4])
-        day5Price.innerHTML = ('Price: $' + data[0].prices[5])
-    }
 }
 
 // search button event listener
@@ -331,11 +328,12 @@ compareButton.addEventListener('click', function () {
 
 currentTrending.addEventListener('click', function (event) {
     if ((event.target.id).toLowerCase() !== currentSymbol.toLowerCase()) {
-    fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + event.target.id, {
-        headers: {
-            'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
-        }
-    })
-        .then(response => response.json())
-        .then(data => data.status.error_code == 400 ? symbolFailTrending() : (viewMarketData(data)))}
+        fetch("https://upenn-cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=" + event.target.id, {
+            headers: {
+                'X-CMC_PRO_API_KEY': '0d988832-1590-4519-98f1-15ce91046756'
+            }
+        })
+            .then(response => response.json())
+            .then(data => data.status.error_code == 400 ? symbolFailTrending() : (viewMarketData(data)))
+    }
 })

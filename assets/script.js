@@ -35,8 +35,13 @@ fetch('https://api.coingecko.com/api/v3/search/trending')
         console.log('Coin Gecko ')
         console.log(data)
         for (var i = 0; i < data.coins.length; i++) {
-            currentTrending.innerHTML += ' <button id="' + data.coins[i].item.symbol + '">' + data.coins[i].item.name + '</button>,'
+            currentTrending.innerHTML += ' <button id="' + data.coins[i].item.symbol + '">' + data.coins[i].item.name + '</button>'
+            if(i < 6){
+                currentTrending.innerHTML += ', '
+            }          
         }
+
+
 })
 
 // get market info

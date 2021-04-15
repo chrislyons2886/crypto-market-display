@@ -11,7 +11,8 @@ Group One's motivation behind this project was to create a user-friendly applica
 [Crypto Market Display Github Repository](https://github.com/chrislyons2886/crypto-market-display)
 
 ## Usage
-![Crypto Market Display](https://user-images.githubusercontent.com/77216549/114790106-2f37d780-9d52-11eb-83c3-651f3b271eb8.png)
+![Crypto Market Display](https://user-images.githubusercontent.com/77216549/114796943-16362300-9d60-11eb-90ad-68e77013aff6.png)
+
 ![Crypto Compare](https://user-images.githubusercontent.com/77216549/114790180-4971b580-9d52-11eb-862a-f096d65172f2.png)
 
 
